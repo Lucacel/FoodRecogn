@@ -1,0 +1,49 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="../static/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="header">
+        <div class="title">
+            <h1>
+                FoodRecognition
+            </h1>
+        </div>
+        <div class="menu">
+            <i>btn1</i>
+            <i>btn2</i>
+            <i>btn3</i>
+            <i>btn4</i>
+        </div>
+    </div>
+    <div class="content">
+
+{#        <div class="uppload_btn_wrapper">#}
+{#            <input type="file" name="file" id="file" class="inputfile" />#}
+{#            <label for="file">Choose a file</label>#}
+{#            <input type="submit" name="recogn_btn" id="recogn_btn">#}
+{#            <label for="recogn_btn">Recognize</label>#}
+{#        </div>#}
+{##}
+{#        <div class="display_img_wrapper">#}
+{#            <image class="display_img" src="../resources/burger.jpg" alt="burger" height="100%"></image>#}
+{#        </div>#}
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*">
+            <input type="submit">
+        </form>
+
+    </div>
+    <div class="footer">
+
+    </div>
+
+    <!--
+    hi there
+    <input type="submit" value="Upload image . . ." id="upload_pic_button">
+    -->
+<script src="../static/mainScript.js"></script>
+</body>
+</html>
