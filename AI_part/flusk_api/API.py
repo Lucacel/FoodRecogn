@@ -1,16 +1,27 @@
 import io
-
+import os
 import flask
 import numpy as np
 from PIL import Image
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array
+import sqlite3
+
+DATA_BASE_PATH = 'D:\Projects\\0FoodRecogn\AI_part\\flusk_api\\food_recogn.db'
+MODEL_PATH = 'D:\\Projects\\0FoodRecogn\\AI_part\\flusk_api\\FoodRecognModel.h5'
+CLASSES_PATH = 'D:\Projects\\0FoodRecogn\AI_part\\flusk_api\\resources\classes.txt'
 
 app = flask.Flask(__name__)
+model = None
+
+
+def loadmodel():
+    global model
+    model = load_model(filepath=MODEL_PATH)
 
 
 def get_classes():
-    with open('resources/classes.txt', 'r') as x_txt:
+    with open(CLASSES_PATH, 'r') as x_txt:
         x_classes = [l.strip() for l in x_txt.readlines()]
         x_ix_to_class = dict(zip(range(len(x_classes)), x_classes))
         x_class_to_ix = {v: k for k, v in x_ix_to_class.items()}
@@ -48,7 +59,6 @@ def top__preds(preds):
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    model = load_model(filepath='FoodRecognModel.h5')
     data = {"success": False}
 
     if flask.request.method == "POST":
@@ -68,7 +78,7 @@ def predict():
             for t in t_preds:
                 for i in classes:
                     if classes[i] == t:
-                        if preds[0][t] * 100 > 50:
+                        if preds[0][t] * 100 > 30:
                             result.append(str(i + " " + str(preds[0][t] * 100)))
 
             data["predictions"] = []
@@ -90,7 +100,16 @@ def index():
     return flask.render_template("Index.html")
 
 
+@app.route("/login", methods=["POST"])
+def login_function():
+    data = {"login": True}
+    content = flask.request.get_json(silent=True)
+    print(content)
+    return flask.jsonify(data)
+
+
 if __name__ == '__main__':
     print("Server is starting ...")
+    loadmodel()
     print("Server started: ...")
     app.run(port=8086)

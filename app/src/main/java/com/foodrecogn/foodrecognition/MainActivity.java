@@ -1,11 +1,11 @@
 package com.foodrecogn.foodrecognition;
 
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
 
-    static final int REQUEST_IMAGE
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
